@@ -1,0 +1,8 @@
+@startuml Hello World   
+    skinparam backgroundColor #F0F0F0
+    skinparam style strictuml
+    skinparam SequenceMessageAlignment center
+    A -> B : Hello World
+    A <- B : Reply
+
+@enduml
