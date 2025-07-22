@@ -1,0 +1,61 @@
+@startuml title University System Class Diagram
+
+skinparam classAttributeIconSize 0
+
+' Abstract Class
+abstract class Person {
+  - name: String
+  - dob: Date
+  + {abstract} getAge(): int
+  + getDetails(): String
+}
+
+' Concrete Classes
+class Student {
+  - studentId: String
+  - major: String
+  + Student(name: String, dob: Date, studentId: String)
+  + enrollCourse(course: Course): void
+  + getStudentId(): String
+}
+
+class Professor {
+  - employeeId: String
+  - department: String
+  + teachCourse(course: Course): void
+  + assignGrade(student: Student, course: Course, grade: String): void
+}
+
+class Course {
+  - courseId: String
+  - title: String
+  - credits: int
+  + getCourseTitle(): String
+  + {static} getCreditHours(): int
+}
+
+' Interface
+interface Payable {
+  + calculateSalary(): double
+  + payTax(amount: double): void
+}
+
+' Relationships
+' Inheritance: Professor and Student are a type of Person
+Person <|-- Student
+Person <|-- Professor
+
+' Association: Professor teaches a Course
+Professor "1" o-- "0..*" Course : teaches >
+
+' Aggregation: A Course has multiple Students
+Course "1" o-- "0..*" Student : enrolledStudents >
+
+' Realization (Interface Implementation): A Professor is Payable
+Professor ..|> Payable
+
+' Dependency: A Professor uses Student and Course in a method but doesn't own them
+Professor .> Student
+Professor .> Course
+
+@enduml
